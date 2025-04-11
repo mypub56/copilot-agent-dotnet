@@ -7,33 +7,33 @@
   },
   "service": "app",
   "workspaceFolder": "/workspace",
-  "forwardPorts": [1433],
+  "forwardPorts": [5000, 5001],
   "customizations": {
     "vscode": {
         "extensions": [
                 "github.copilot",
                 "ms-dotnettools.csdevkit",
                 "ms-azuretools.vscode-docker",
-                "ms-mssql.mssql"
+                "alexcvzz.vscode-sqlite"
             ],
       "settings": {
-        "mssql.connections": [
-          {
-            "server": "localhost",
-            "database": "master",
-            "user": "sa",
-            "password": "Your_strong_password123"
-          }
-        ]
+        "sqlite.sqlite3": "/usr/bin/sqlite3"
       }
     }
   },
   "features": {},
   "portsAttributes": {
-    "1433": {
-      "label": "MSSQL Server",
+    "5000": {
+      "label": "Web App HTTP",
+      "onAutoForward": "notify"
+    },
+    "5001": {
+      "label": "Web App HTTPS",
       "onAutoForward": "notify"
     }
   },
-  "mounts": []
+  "postCreateCommand": "mkdir -p /workspace/data",
+  "mounts": [
+    "source=sqlite-data,target=/workspace/data,type=volume"
+  ]
 }
