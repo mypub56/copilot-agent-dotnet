@@ -7,31 +7,15 @@ services:
       dockerfile: .devcontainer/Dockerfile
     volumes:
       - ..:/workspace:cached
+      - sqlite-data:/workspace/data
     command: sleep infinity
-    depends_on:
-      - mssql
     environment:
       ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: "Data Source=/workspace/data/app.db;Cache=Shared"
     ports:
       - "5000:5000"
       - "5001:5001"
 
-  mssql:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    environment:
-      ACCEPT_EULA: "Y"
-      SA_PASSWORD: "Your_strong_password123"
-      MSSQL_PID: "Express"
-    ports:
-      - "1433:1433"
-    volumes:
-      - mssql-data:/var/opt/mssql
-    healthcheck:
-      test: [ "CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'Your_strong_password123' -Q 'SELECT 1'" ]
-      interval: 10s
-      retries: 10
-      start_period: 20s
-
 volumes:
-  mssql-data:
+  sqlite-data:
     driver: local
