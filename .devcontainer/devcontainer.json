@@ -1,0 +1,25 @@
+{
+    // Name this configuration
+    "name": "Introduction to Copilot",
+    // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+    "image": "mcr.microsoft.com/devcontainers/dotnet:9.0",
+    "hostRequirements": {
+        "cpus": 2
+    },
+    "features": {
+        "ghcr.io/devcontainers/features/sqlserver:1": {
+            "version": "2022-latest",
+            "acceptEula": true,
+            "saPassword": "YourStrong@Password"
+        }
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "github.copilot",
+                "ms-dotnettools.csdevkit",
+                "ms-azuretools.vscode-docker"
+            ]
+        }
+    }
+}
