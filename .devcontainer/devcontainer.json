@@ -1,19 +1,39 @@
 {
     // Name this configuration
     "name": "Introduction to Copilot",
-    // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-    "image": "mcr.microsoft.com/devcontainers/dotnet:9.0",
-    "hostRequirements": {
-        "cpus": 2
-    },
-    "customizations": {
-        "vscode": {
-            "extensions": [
+    "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  "forwardPorts": [1433],
+  "customizations": {
+    "vscode": {
+        "extensions": [
                 "github.copilot",
                 "ms-dotnettools.csdevkit",
-                "ms-azuretools.vscode-docker"
-            ]
-        }
-    },
-    "postCreateCommand": "docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=YourStrong@Password' -p 1433:1433 -d mcr.microsoft.com/mssql/server:2019-latest"
+                "ms-azuretools.vscode-docker",
+                "ms-mssql.mssql"
+            ],
+      "settings": {
+        "mssql.connections": [
+          {
+            "server": "localhost",
+            "database": "master",
+            "user": "sa",
+            "password": "Your_strong_password123"
+          }
+        ]
+      }
+    }
+  },
+  "features": {},
+  "portsAttributes": {
+    "1433": {
+      "label": "MSSQL Server",
+      "onAutoForward": "notify"
+    }
+  },
+  "mounts": []
 }
